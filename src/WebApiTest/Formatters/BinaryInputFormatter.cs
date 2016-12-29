@@ -45,6 +45,8 @@ namespace WebApiTest
         {
             List<Model.Datapoint> list = new List<Model.Datapoint>();
 
+
+
             int buffersize = 10000;
             byte[] buffer = new byte[buffersize];
             int bufferFilled = 0;
@@ -57,6 +59,9 @@ namespace WebApiTest
                 bufferFilled += bytesRead;
             } while (bytesRead > 0);
 
+
+            SocketHandler.MessageAll(String.Format("Message of {0} bytes came in", bufferFilled));
+
             int i;
 
             List<string> sensorsInMessage = new List<string>(); 
@@ -66,12 +71,33 @@ namespace WebApiTest
             {
                 short sensorID = BitConverter.ToInt16(buffer, i);
 
-                if (sensorID == 0)
+                if (sensorID == 0) //ID of 0 indicates a break in the header
                     break;
 
-                var sensor = Model.Datapoint.SensorIdLUT.FirstOrDefault(); //TODO: error check
+                if(Model.Datapoint.SensorIdLUT.ContainsKey(sensorID) == false)
+                {                    
+                    SocketHandler.MessageAll($"Invalid sensor ID '{sensorID}', sensor number '{sensorsInMessage.Count}'");
+                    return InputFormatterResult.Failure();
+                }
+
+                var sensor = Model.Datapoint.SensorIdLUT.FirstOrDefault(); 
                 sensorsInMessage.Add(sensor.Value); 
             }
+            if (i == bufferFilled)
+                return InputFormatterResult.Failure();
+
+
+            //Send debug data
+            {
+                string message = $"Message contains readings for '{sensorsInMessage.Count}' sensors: \n";
+
+                foreach (var sensor in sensorsInMessage)
+                {
+                    message += $"{sensor}\n";
+                }
+                SocketHandler.MessageAll(message);
+            }
+
 
             while (i < bufferFilled)
             {

@@ -56,6 +56,8 @@ namespace WebApiTest
             //app.UseApplicationInsightsExceptionTelemetry();
 
             app.UseMvc();
+
+            app.Map("/listen", SocketHandler.Map);
         }
     }
 }
