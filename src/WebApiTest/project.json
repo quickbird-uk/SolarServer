@@ -12,10 +12,7 @@
     "Microsoft.Extensions.Logging.Console": "1.1.0",
     "Microsoft.Extensions.Logging.Debug": "1.1.0",
     "Microsoft.Extensions.Options.ConfigurationExtensions": "1.1.0",
-    "Microsoft.NETCore.App": {
-      "type": "platform",
-      "version": "1.0.1"
-    }
+    "Microsoft.NETCore.App": "1.1.0"
   },
 
   "tools": {
@@ -23,9 +20,9 @@
   },
 
   "frameworks": {
-    "netcoreapp1.0.1": {
+    "netcoreapp1.1": {
       "imports": [
-        "netcoreapp1.0.1"
+        "netcoreapp1.1"
       ]
     }
   },
@@ -38,22 +35,29 @@
     ]
   },
 
-    "runtimeOptions": {
-      "configProperties": {
-        "System.GC.Server": true
-      }
-    },
-
-    "publishOptions": {
-      "include": [
-        "wwwroot",
-        "**/*.cshtml",
-        "appsettings.json",
-        "web.config"
-      ]
-    },
-
-    "scripts": {
-      "postpublish": [ "dotnet publish-iis --publish-folder %publish:OutputPath% --framework %publish:FullTargetFramework%" ]
+  "runtimeOptions": {
+    "configProperties": {
+      "System.GC.Server": true
     }
+  },
+
+  "publishOptions": {
+    "include": [
+      "wwwroot",
+      "**/*.cshtml",
+      "appsettings.json",
+      "web.config"
+    ]
+  },
+
+  "runtimes": {
+    "win10-x64": {},
+    "osx.10.10-x64": {},
+    "ubuntu.14.04": {},
+    "linux": {}
+  },
+
+  "scripts": {
+    "postpublish": [ "dotnet publish-iis --publish-folder %publish:OutputPath% --framework %publish:FullTargetFramework%" ]
   }
+}
