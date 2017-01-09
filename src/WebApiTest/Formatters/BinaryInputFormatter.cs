@@ -91,12 +91,16 @@ namespace WebApiTest
                     return InputFormatterResult.Failure();
                 }
 
-                var sensor = Model.Datapoint.SensorIdLUT.FirstOrDefault(); 
+                var sensor = Model.Datapoint.SensorIdLUT.FirstOrDefault(lutID => lutID.Key == sensorID);
                 sensorsInMessage.Add(sensor.Value); 
             }
-            if (i == bufferFilled)
+            if ((i < bufferFilled) == false)
                 return InputFormatterResult.Failure();
-
+            else
+            {
+                //Skip the delimeter
+                i += sizeof(short);
+            }
 
             //Send debug data
             {
@@ -110,7 +114,7 @@ namespace WebApiTest
             }
 
 
-            while (i < bufferFilled)
+            while (i < buffer.Length)
             {
                 Model.Datapoint datapoint = new Model.Datapoint();
 
@@ -119,6 +123,7 @@ namespace WebApiTest
                 i += 4; //move along by 4 because we read an int; 
 
                 datapoint.chargeState = (Model.ChargeState) buffer[i]; //We are using the same numbers to determine this, so we can just convert directly
+                i += 4;
 
                 datapoint.BatteryVoltage = BitConverter.ToSingle(buffer, i);
                 i += 4; 
@@ -131,6 +136,7 @@ namespace WebApiTest
                     i += 4;
                 }
 
+                list.Add(datapoint); 
             }
 
             return InputFormatterResult.Success(list); 
