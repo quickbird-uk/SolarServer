@@ -44,38 +44,49 @@ namespace WebApiTest
         public async Task<InputFormatterResult> ReadAndDecode(Stream stream)
         {
             List<Model.Datapoint> list = new List<Model.Datapoint>();
-
+            var LUT = Model.Datapoint.SensorIdLUT; 
 
 
             int buffersize = 10000;
-            byte[] buffer = new byte[buffersize];
+            byte[] HexByteBuffer = new byte[buffersize];
             int bufferFilled = 0;
             int bytesRead = 0;
 
             //Read al lteh data
             do
             {
-                bytesRead = await stream.ReadAsync(buffer, bufferFilled, buffersize - bufferFilled);
+                bytesRead = await stream.ReadAsync(HexByteBuffer, bufferFilled, buffersize - bufferFilled);
                 bufferFilled += bytesRead;
             } while (bytesRead > 0);
 
 
+
+            string base64String = System.Text.Encoding.UTF8.GetString(HexByteBuffer).TrimEnd('\0');
+
+            //SocketHandler.MessageAll($"recevied base 64 string /n '{base64String}'"); 
+
+            byte[] buffer =  System.Convert.FromBase64String(base64String); 
+
             SocketHandler.MessageAll(String.Format("Message of {0} bytes came in", bufferFilled));
+
+            
 
             int i;
 
             List<string> sensorsInMessage = new List<string>(); 
 
             //Read Sensor Header
-            for(i = 0; i < bufferFilled; i+=2)
+            for(i = 0; i < bufferFilled; i+= sizeof(short))
             {
                 short sensorID = BitConverter.ToInt16(buffer, i);
+                SocketHandler.MessageAll($"Sensor id '{sensorID}'\n");
 
                 if (sensorID == 0) //ID of 0 indicates a break in the header
-                    break;
+                { break; }
 
-                if(Model.Datapoint.SensorIdLUT.ContainsKey(sensorID) == false)
-                {                    
+                bool validSendorID = LUT.ContainsKey(sensorID); 
+                if (validSendorID == false)
+                {
                     SocketHandler.MessageAll($"Invalid sensor ID '{sensorID}', sensor number '{sensorsInMessage.Count}'");
                     return InputFormatterResult.Failure();
                 }
