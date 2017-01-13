@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+
 namespace WebApiTest.Model
 {
     public enum ChargeState
@@ -11,6 +14,8 @@ namespace WebApiTest.Model
     }
     public class Datapoint
     {
+        public Guid ID; 
+
         public DateTime UTCTimestamp;
 
         public ChargeState chargeState;
@@ -18,8 +23,6 @@ namespace WebApiTest.Model
         public float BatteryVoltage;
 
         public Dictionary<string, float> sensorReadings = new Dictionary<string, float>();
-
-
 
         private static Dictionary<short, string> _sensorIdLUT = null;
         

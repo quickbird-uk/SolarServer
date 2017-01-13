@@ -42,6 +42,9 @@ namespace WebApiTest
                 options.InputFormatters.Insert(0, new BinaryInputFormatter());
             });
 
+            //Adding MongoDB
+            services.AddTransient<Model.DataAccess>();
+
             services.AddMvc();
         }
 
