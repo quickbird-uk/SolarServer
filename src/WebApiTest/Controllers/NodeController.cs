@@ -18,7 +18,7 @@ namespace WebApiTest.Controllers
 
         public NodeController()
         {
-            objds = new DataAccess();  ;
+            objds = new DataAccess(); 
         }
 
         [HttpGet]
@@ -27,7 +27,7 @@ namespace WebApiTest.Controllers
             return objds.GetNodes();
         }
 
-        public IActionResult Get(long id)
+        public IActionResult Get(int id)
         {
             var product = objds.GetNode(id);
             if (product == null)
@@ -44,7 +44,7 @@ namespace WebApiTest.Controllers
             return p;
         }
 
-        public IActionResult Put(long id, [FromBody]Node p)
+        public IActionResult Put(int id, [FromBody]Node p)
         {
             var product = objds.GetNode(id);
             if (product == null)
@@ -57,7 +57,7 @@ namespace WebApiTest.Controllers
             return new OkResult();
         }
 
-        public IActionResult Delete(long id)
+        public IActionResult Delete(int id)
         {
             var product = objds.GetNode(id);
             if (product == null)

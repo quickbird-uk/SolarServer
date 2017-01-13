@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Driver;
 
 namespace WebApiTest.Model
 {
@@ -14,7 +15,8 @@ namespace WebApiTest.Model
     }
     public class Datapoint
     {
-        public Guid ID; 
+        [BsonId]
+        public long id;
 
         public DateTime UTCTimestamp;
 

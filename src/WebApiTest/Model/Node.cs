@@ -12,7 +12,7 @@ namespace WebApiTest.Model
     {
 
         [BsonId]
-        public long Id { get; set; }
+        public int Id { get; set; }
         
         [BsonElement("NickName")]
         public string NickName { get; set; }
