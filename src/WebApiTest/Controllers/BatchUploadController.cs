@@ -23,6 +23,7 @@ namespace WebApiTest.Controllers
         [HttpPut]
         public IActionResult Put(int id,[FromBody]List<Model.Datapoint> list)
         {
+            DateTime uploadTime = DateTime.UtcNow; 
             int nodeId = id; 
             var node = objds.GetNode(nodeId);
             if (node == null)
@@ -37,7 +38,10 @@ namespace WebApiTest.Controllers
                 objds.CreateNode(node);
             }
             else
+            {
                 node.LastConnection = DateTime.UtcNow;
+                objds.UpdateNode(nodeId, node); 
+            }
 
             foreach(Datapoint dp in list)
             {
@@ -46,7 +50,11 @@ namespace WebApiTest.Controllers
                 //Move unix seconds to the top 32 bit 
                 dp.id = ((long)unixSeconds << 32);
                 //Put nodeID in the lower 32 bit
-                dp.id += nodeId; 
+                dp.id += nodeId;
+
+                dp.NodeId = nodeId;
+
+                dp.UploadTime = uploadTime; 
             }
 
             objds.CreateDatepoint(list); 

@@ -41,16 +41,20 @@ namespace WebApiTest.Model
 
         public void CreateDatepoint(List<Datapoint> dp)
         {
-            List<BsonDocument> documents = new List<BsonDocument>(); 
+            List<BsonDocument> documents = new List<BsonDocument>(dp.Count); 
 
             foreach(var datapoint in dp)
             {
-                var jsonDoc = Newtonsoft.Json.JsonConvert.SerializeObject(datapoint);
-                var bsonDoc = MongoDB.Bson.Serialization.BsonSerializer.Deserialize<BsonDocument>(jsonDoc);
-                documents.Add(bsonDoc); 
+                BsonDocument document = datapoint.ToBsonDocument();
+
+                foreach (var kv in datapoint.sensorReadings)
+                {
+                    document.Add(kv.Key, kv.Value); 
+                }
+                documents.Add(document);
             }
 
-            _db.GetCollection("Datapoints").Save(documents);
+            _db.GetCollection("Datapoints").InsertBatch(documents);
 
         }
 

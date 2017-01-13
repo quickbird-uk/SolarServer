@@ -18,12 +18,17 @@ namespace WebApiTest.Model
         [BsonId]
         public long id;
 
+        public int NodeId; 
+
         public DateTime UTCTimestamp;
+
+        public DateTime UploadTime;
 
         public ChargeState chargeState;
 
         public float BatteryVoltage;
 
+        [BsonIgnore]
         public Dictionary<string, float> sensorReadings = new Dictionary<string, float>();
 
         private static Dictionary<short, string> _sensorIdLUT = null;
