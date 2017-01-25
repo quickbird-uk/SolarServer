@@ -24,9 +24,9 @@ namespace WebApiTest.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            //List<Datapoint> list =
+            List<BsonDocument> list = objds.GetDatapoint();
             ViewData["Message"] = "Your application description page.";
-            ViewData["list"] = objds.GetDatapoint();
+            ViewData["list"] = list; 
 
             return View("Views/ReadingsView.cshtml");
         }

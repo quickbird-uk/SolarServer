@@ -19,70 +19,54 @@
 
 <table class="table">
     <tr>
-        <th>
-            
-                Node ID
-            
-        </th>        
-        <th>
-            <div id="your_col">
-                TimeStamp
-            </div>
-        </th>
-
-        <th>
-            <div id="your_col">
-                Uploaded At
-                </div>
-            </th>
-
-        <th>
-            <div id="your_col">
-                &nbsp; Battery Voltage
-                </div>
-        </th>
-        @{var readings = (ViewData["list"] as List<WebApiTest.Model.Datapoint>).FirstOrDefault()?.sensorReadings;}
-        @for(int i = 0; i < readings.Count; i++)
+        @{var document = (ViewData["list"] as List<MongoDB.Bson.BsonDocument>).FirstOrDefault();}
+        @for(int i = 0; i < document.ElementCount; i++)
         {
-            
+
             <td>
                 <div id="your_col">
-                    &nbsp;@readings.ElementAt(i).Key&nbsp;
+                    @{ string name = document.ElementAt(i).Name;}
+                    &nbsp;
+                    @if (name.Length > 7)
+                    { @name.Substring(0, 6)
+                    }
+                    else
+                    {
+                        @name
+                    }
+                    
+                    &nbsp;
                 </div>
             </td>
         }
         <th></th>
     </tr>
-    @foreach (var Datapoint in (ViewData["list"] as List<WebApiTest.Model.Datapoint>))
+    @foreach (var Datapoint in (ViewData["list"] as List<MongoDB.Bson.BsonDocument>))
     {
-        <tr>
-            <td>
-                @Datapoint.NodeId
-            </td>
+        <tr>      
+            @for (int i = 0; i < Datapoint.ElementCount; i++)
+            {
             <td>
                 <div id="your_col">
-                    &nbsp;@Datapoint.UTCTimestamp&nbsp;
+                    &nbsp;
+                    @{var element = Datapoint.ElementAt(i);}
+                    @if (element.Value.IsInt32)
+                   {
+                        @element.Value.AsInt32;
+                    }
+                    else if (element.Value.IsDouble)
+                    {  
+                        @(Math.Round((float)element.Value.AsDouble,2));
+                    }
+                    else if (element.Value.IsValidDateTime)
+                    { 
+                        @element.Value.ToUniversalTime();
+                    }
+                    &nbsp;
                 </div>
             </td>
-            <td>
-                <div id="your_col">
-                    &nbsp;@Datapoint.UploadTime&nbsp;
-
-            </td>
-            <td>
-                <div id="your_col">
-                    &nbsp;@Math.Round(Datapoint.BatteryVoltage, 2)&nbsp;
-                </div>
-                @for (int i = 0; i < Datapoint.sensorReadings.Count; i++)
-                {
-
-                <td>
-                    <div id="your_col">
-                        &nbsp;@Datapoint.sensorReadings.ElementAt(i).Value&nbsp;
-                    </div>
-                </td>
-                }
-</tr>
+            }
+        </tr>
     }
 
 </table>
