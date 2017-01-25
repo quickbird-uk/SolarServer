@@ -182,6 +182,7 @@
 "C:\Dev\SolarServer\src\WebApiTest\Startup.cs"
 "C:\Dev\SolarServer\src\WebApiTest\Controllers\BatchUploadController.cs"
 "C:\Dev\SolarServer\src\WebApiTest\Controllers\NodeController.cs"
+"C:\Dev\SolarServer\src\WebApiTest\Controllers\ReadingsController.cs"
 "C:\Dev\SolarServer\src\WebApiTest\Formatters\BinaryInputFormatter.cs"
 "C:\Dev\SolarServer\src\WebApiTest\Model\DataAccess.cs"
 "C:\Dev\SolarServer\src\WebApiTest\Model\Datapoint.cs"

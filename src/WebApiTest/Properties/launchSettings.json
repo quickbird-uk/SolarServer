@@ -19,7 +19,7 @@
     "WebApiTest": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "http://localhost:5000/api/Nodes",
+      "launchUrl": "http://localhost:5000/api/Readings",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

@@ -1,0 +1,90 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model List<WebApiTest.Model.Datapoint>
+
+@{
+    ViewData["Title"] = "About";
+}
+<style type="text/css">
+    #your_col {
+      border-left: 1px solid black;
+    }
+</style>
+
+
+<h2>@ViewData["Title"].</h2>
+<h3>@ViewData["Message"]</h3>
+
+
+<table class="table">
+    <tr>
+        <th>
+            
+                Node ID
+            
+        </th>        
+        <th>
+            <div id="your_col">
+                TimeStamp
+            </div>
+        </th>
+
+        <th>
+            <div id="your_col">
+                Uploaded At
+                </div>
+            </th>
+
+        <th>
+            <div id="your_col">
+                &nbsp; Battery Voltage
+                </div>
+        </th>
+        @{var readings = (ViewData["list"] as List<WebApiTest.Model.Datapoint>).FirstOrDefault()?.sensorReadings;}
+        @for(int i = 0; i < readings.Count; i++)
+        {
+            
+            <td>
+                <div id="your_col">
+                    &nbsp;@readings.ElementAt(i).Key&nbsp;
+                </div>
+            </td>
+        }
+        <th></th>
+    </tr>
+    @foreach (var Datapoint in (ViewData["list"] as List<WebApiTest.Model.Datapoint>))
+    {
+        <tr>
+            <td>
+                @Datapoint.NodeId
+            </td>
+            <td>
+                <div id="your_col">
+                    &nbsp;@Datapoint.UTCTimestamp&nbsp;
+                </div>
+            </td>
+            <td>
+                <div id="your_col">
+                    &nbsp;@Datapoint.UploadTime&nbsp;
+
+            </td>
+            <td>
+                <div id="your_col">
+                    &nbsp;@Math.Round(Datapoint.BatteryVoltage, 2)&nbsp;
+                </div>
+                @for (int i = 0; i < Datapoint.sensorReadings.Count; i++)
+                {
+
+                <td>
+                    <div id="your_col">
+                        &nbsp;@Datapoint.sensorReadings.ElementAt(i).Value&nbsp;
+                    </div>
+                </td>
+                }
+</tr>
+    }
+
+</table>
+
+<p>Use this area to provide additional information.</p>
