@@ -11,7 +11,7 @@ using WebApiTest.Model;
 
 namespace WebApiTest.Controllers 
 {
-    [Route("api/Readings")]
+    [Route("")]
     public class ReadingsController : Controller
     {
         DataAccess objds;

@@ -60,7 +60,7 @@
                     }
                     else if (element.Value.IsValidDateTime)
                     { 
-                        @element.Value.ToUniversalTime();
+                        @element.Value.ToUniversalTime().ToString("dd/MM/yy H:mm");
                     }
                     &nbsp;
                 </div>
