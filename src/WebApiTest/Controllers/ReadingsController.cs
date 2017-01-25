@@ -31,14 +31,13 @@ namespace WebApiTest.Controllers
             return View("Views/ReadingsView.cshtml");
         }
 
-        public IActionResult Get(int id)
+        public IActionResult Get(int quantity)
         {
-            var product = objds.GetNode(id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-            return new ObjectResult(product);
+            List<BsonDocument> list = objds.GetDatapoint(quantity);
+            ViewData["Message"] = "Your application description page.";
+            ViewData["list"] = list;
+
+            return View("Views/ReadingsView.cshtml");
         }
     }
 }
