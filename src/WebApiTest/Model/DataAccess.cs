@@ -59,18 +59,26 @@ namespace WebApiTest.Model
 
         }
 
-        public List<BsonDocument> GetDatapoint(int nodeID = -9000) // Magic Vlaue
+        public List<BsonDocument> GetDatapointsAll() // Magic Vlaue
         {
-            int takeNUmber = 200; 
-            List<Datapoint> dp = new List<Datapoint>(takeNUmber); 
-             SortByBuilder sbb = new SortByBuilder();
-            sbb.Ascending("_id");
-            long number = _db.GetCollection<BsonDocument>("Datapoints").Count(); 
-
-            var documents = _db.GetCollection<BsonDocument>("Datapoints").AsQueryable().Skip((int)(number - takeNUmber)).Take(takeNUmber).ToList();
+            var documents = _db.GetCollection<BsonDocument>("Datapoints").FindAll().ToList();
 
             documents.Reverse();           
             return documents; 
+        }
+
+        public List<BsonDocument> GetDatapoint(int nodeID = -9000) // Magic Vlaue
+        {
+            int takeNUmber = 200;
+            List<Datapoint> dp = new List<Datapoint>(takeNUmber);
+            SortByBuilder sbb = new SortByBuilder();
+            sbb.Ascending("_id");
+            long number = _db.GetCollection<BsonDocument>("Datapoints").Count();
+
+            var documents = _db.GetCollection<BsonDocument>("Datapoints").AsQueryable().Skip((int)(number - takeNUmber)).Take(takeNUmber).ToList();
+
+            documents.Reverse();
+            return documents;
         }
 
         public void UpdateNode(int id, Node p)
