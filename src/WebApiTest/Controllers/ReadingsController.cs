@@ -11,7 +11,7 @@ using WebApiTest.Model;
 
 namespace WebApiTest.Controllers 
 {
-    [Route("")]
+    [Route("table")]
     public class ReadingsController : Controller
     {
         DataAccess objds;

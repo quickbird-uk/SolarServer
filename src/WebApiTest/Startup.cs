@@ -58,6 +58,9 @@ namespace WebApiTest
 
             //app.UseApplicationInsightsExceptionTelemetry();
 
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+
             app.UseMvc();
 
             app.Map("/listen", SocketHandler.Map);
