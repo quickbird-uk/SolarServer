@@ -23,9 +23,9 @@ namespace WebApiTest.Controllers
         }
 
         [HttpGet]
-        public List<ExpandoObject> Get()
+        public async Task<List<ExpandoObject>> Get()
         {
-            List<BsonDocument> list = objds.GetDatapointsAll();
+            List<BsonDocument> list = await objds.GetDatapointsAll();
             List<ExpandoObject> returnlist = new List<ExpandoObject>(list.Count);
             foreach (var doc in list) {
                 dynamic expando = new ExpandoObject();
@@ -41,6 +41,31 @@ namespace WebApiTest.Controllers
 
                 }
                 returnlist.Add(expando); 
+            }
+
+            return returnlist;
+        }
+
+
+        public async Task<List<ExpandoObject>> Get(int id)
+        {
+            List<BsonDocument> list = await objds.GetDatapointsOfNode(id);
+            List<ExpandoObject> returnlist = new List<ExpandoObject>(list.Count);
+            foreach (var doc in list)
+            {
+                dynamic expando = new ExpandoObject();
+                var x = expando as IDictionary<string, object>;
+                foreach (var el in doc.Elements)
+                {
+                    if (el.Value.IsInt32)
+                        x.Add(el.Name, el.Value.AsInt32);
+                    else if (el.Value.IsDouble)
+                        x.Add(el.Name, el.Value.ToDouble());
+                    else if (el.Value.IsValidDateTime)
+                        x.Add(el.Name, el.Value.ToUniversalTime());
+
+                }
+                returnlist.Add(expando);
             }
 
             return returnlist;

@@ -21,11 +21,11 @@ namespace WebApiTest.Controllers
 
         // POST api/batchUplaod
         [HttpPut]
-        public IActionResult Put(int id,[FromBody]List<Model.Datapoint> list)
+        public async Task<IActionResult> Put(int id,[FromBody]List<Model.Datapoint> list)
         {
             DateTime uploadTime = DateTime.UtcNow; 
             int nodeId = id; 
-            var node = objds.GetNode(nodeId);
+            var node = await objds.GetNode(nodeId);
             if (node == null)
             {
 
@@ -35,12 +35,12 @@ namespace WebApiTest.Controllers
                     LastConnection = DateTime.UtcNow,
                     NickName = ""
                 };
-                objds.CreateNode(node);
+                await objds.UpsertNode(node);
             }
             else
             {
                 node.LastConnection = DateTime.UtcNow;
-                objds.UpdateNode(nodeId, node); 
+                await objds.UpsertNode(node); 
             }
 
             foreach(Datapoint dp in list)
@@ -57,7 +57,7 @@ namespace WebApiTest.Controllers
                 dp.UploadTime = uploadTime; 
             }
 
-            objds.CreateDatepoint(list); 
+            await objds.CreateDatapoint(list); 
 
             return StatusCode(201); 
         }

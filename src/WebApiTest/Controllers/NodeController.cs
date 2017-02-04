@@ -22,9 +22,9 @@ namespace WebApiTest.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Node> Get()
+        public async Task<IEnumerable<Node>> Get()
         {
-            return objds.GetNodes();
+            return await objds.GetNodes();
         }
 
         public IActionResult Get(int id)
@@ -38,13 +38,13 @@ namespace WebApiTest.Controllers
         }
 
         [HttpPost]
-        public Node Post([FromBody]Node p)
+        public async Task<Node> Post([FromBody]Node p)
         {
-            objds.CreateNode(p);
+            await objds.UpsertNode(p);
             return p;
         }
 
-        public IActionResult Put(int id, [FromBody]Node p)
+        public async Task<IActionResult> Put(int id, [FromBody]Node p)
         {
             var product = objds.GetNode(id);
             if (product == null)
@@ -53,11 +53,11 @@ namespace WebApiTest.Controllers
                 return StatusCode(404); 
             }
 
-            objds.UpdateNode(id, p);
+            await objds.UpsertNode(p);
             return new OkResult();
         }
 
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var product = objds.GetNode(id);
             if (product == null)
@@ -65,7 +65,7 @@ namespace WebApiTest.Controllers
                 return  NotFound();
             }
 
-            objds.RemoveNode(product.Id);
+            await objds.RemoveNode(product.Id);
             return new OkResult();
         }
     }
