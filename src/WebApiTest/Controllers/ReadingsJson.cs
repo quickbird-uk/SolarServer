@@ -9,10 +9,11 @@ using Microsoft.AspNetCore.Mvc;
 
 using WebApiTest.Model;
 using System.Dynamic;
+using System.Diagnostics; 
 
 namespace WebApiTest.Controllers 
 {
-    [Route("api/Readings")]
+    [Route("api/readings")]
     public class ReadingsJsonController : Controller
     {
         DataAccess objds;
@@ -25,8 +26,11 @@ namespace WebApiTest.Controllers
         [HttpGet]
         public async Task<List<ExpandoObject>> Get()
         {
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
             List<BsonDocument> list = await objds.GetDatapointsAll();
             List<ExpandoObject> returnlist = new List<ExpandoObject>(list.Count);
+            watch.Stop();
             foreach (var doc in list) {
                 dynamic expando = new ExpandoObject();
                 var x = expando as IDictionary<string, object>; 
@@ -46,11 +50,14 @@ namespace WebApiTest.Controllers
             return returnlist;
         }
 
-
+        [HttpGet("{id}")]
         public async Task<List<ExpandoObject>> Get(int id)
         {
+            Stopwatch watch = new Stopwatch();
+            watch.Start(); 
             List<BsonDocument> list = await objds.GetDatapointsOfNode(id);
             List<ExpandoObject> returnlist = new List<ExpandoObject>(list.Count);
+            watch.Stop();
             foreach (var doc in list)
             {
                 dynamic expando = new ExpandoObject();

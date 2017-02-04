@@ -64,7 +64,9 @@ namespace WebApiTest.Model
 
         public async Task<List<BsonDocument>> GetDatapointsAll() // Magic Vlaue
         {
-            var documents = await _db.GetCollection<BsonDocument>("Datapoints").AsQueryable().ToListAsync();
+            var documents = await _db.GetCollection<BsonDocument>("Datapoints")
+                .Find(FilterDefinition<BsonDocument>.Empty)
+                .ToListAsync();
 
             documents.Reverse();           
             return documents; 
@@ -72,15 +74,13 @@ namespace WebApiTest.Model
 
         public async Task<List<BsonDocument>> GetDatapointsOfNode(int id) // Magic Vlaue
         {
-            var filter = Builders<BsonDocument>.Filter.Eq("NodeID", id);
+            var filter = Builders<BsonDocument>.Filter.Eq("NodeId", id);
 
 
             var documents = await _db.GetCollection<BsonDocument>("Datapoints")
-                .FindAsync(filter);
+                .Find(filter).ToListAsync();
 
-            var docs = documents.ToList();
-            docs.Reverse();
-            return docs;
+            return documents;
         }
 
         public List<BsonDocument> GetDatapoint(int nodeID = -9000) // Magic Vlaue
