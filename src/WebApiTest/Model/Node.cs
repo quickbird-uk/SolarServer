@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Driver.GeoJsonObjectModel; 
 
 namespace WebApiTest.Model
 {
@@ -19,5 +20,8 @@ namespace WebApiTest.Model
 
         [BsonElement("LastConnection")]
         public DateTime LastConnection { get; set; }
+
+        [BsonElement("Location")]
+        public GeoJson2DGeographicCoordinates Location { get; set; }
     }
 }

@@ -83,11 +83,16 @@ namespace WebApiTest.Model
             return documents;
         }
 
-        public List<BsonDocument> GetDatapoint(int nodeID = -9000) // Magic Vlaue
+        public async Task<List<BsonDocument>> GetDatapoint(int nodeID = -9000) // Magic Vlaue
         {
-            int takeNUmber = 200;
+            int takeNUmber = 300;
+            List<Datapoint> dp = new List<Datapoint>(takeNUmber);
 
-            var documents = _db.GetCollection<BsonDocument>("Datapoints").AsQueryable().Take(takeNUmber).ToList();
+            long number = await _db.GetCollection<BsonDocument>("Datapoints")
+                .CountAsync(FilterDefinition<BsonDocument>.Empty);
+
+            var documents = await _db.GetCollection<BsonDocument>("Datapoints")
+                .AsQueryable().Skip((int)(number - takeNUmber)).Take(takeNUmber).ToListAsync();
 
             documents.Reverse();
             return documents;
