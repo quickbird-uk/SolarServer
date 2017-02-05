@@ -40,6 +40,9 @@ namespace WebApiTest.Controllers
                 .Value
                 .ToUniversalTime();
 
+                if(dateTime < new DateTime(2016,0,0,0,0,0,0,DateTimeKind.Utc) || (dateTime > new DateTime(2019, 0, 0, 0, 0, 0, 0, DateTimeKind.Utc)))
+                { continue; }
+
                 long utcTimestamp = new DateTimeOffset(dateTime, TimeSpan.Zero).ToUnixTimeMilliseconds();
 
                 foreach (var el in doc.Elements)
@@ -67,11 +70,21 @@ namespace WebApiTest.Controllers
                         };
 
 
+
                         if (el.Value.IsInt32)
                             point.y = el.Value.AsInt32;
                         else if (el.Value.IsDouble)
-                            point.y = (float) el.Value.ToDouble();
+                        {
+                            point.y = (float)el.Value.ToDouble();
+                            if(el.Name == "Air Temperature - Internal")
+                            {
+                                if (point.y > 300)
+                                    point.y = 410 - point.y; 
+                            }
+                        }
 
+                        //These are erornous values, filter them
+                        if(point.y > -1000 && point.y < 1000000)
                         collection.values.Add(point);
                     }
                 }
