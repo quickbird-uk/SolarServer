@@ -35,7 +35,7 @@ namespace WebApiTest.Controllers
                     LastConnection = DateTime.UtcNow,
                     NickName = ""
                 };
-                await objds.UpsertNode(node);
+                await objds.InsertNode(node);
             }
             else
             {

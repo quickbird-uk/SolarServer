@@ -18,7 +18,7 @@ namespace WebApiTest.Model
 
         public DataAccess()
         {
-            _client = new MongoClient("mongodb://solariot:HnZVqnuEjQUXuYSSvps5P1QOaCafSk6pfJEKzY2cRLKo1zdmFIIdQCZYuaLWUdk6BXahMjsPXIUWcB15Co5g1g==@solariot.documents.azure.com:10250/?ssl=true");
+            _client = new MongoClient("mongodb://solariotbb:HbLb6pM81S0iRF7ATQuMGtIB0mGAnzp3FMzOy9hJSuPLqacrRwh1Ir6pCk10erylG40DEGJtaLt8YM3Wc8AhDg==@solariotbb.documents.azure.com:10250/?ssl=true");
             _db = _client.GetDatabase("1");
             Console.Out.WriteLine("Connection has been established.\n");
         }
@@ -42,6 +42,14 @@ namespace WebApiTest.Model
 
             return p;
         }
+
+        public async Task<Node> InsertNode(Node p)
+        {
+            await _db.GetCollection<Node>("Nodes").InsertOneAsync(p);
+
+            return p;
+        }
+
 
         public async Task CreateDatapoint(List<Datapoint> dp)
         {
