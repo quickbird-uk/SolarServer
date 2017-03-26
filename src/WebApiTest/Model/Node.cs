@@ -19,5 +19,8 @@ namespace WebApiTest.Model
 
         [BsonElement("LastConnection")]
         public DateTime LastConnection { get; set; }
+
+        [BsonElement("Location")]
+        public string Location { get; set; }
     }
 }

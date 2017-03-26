@@ -17,7 +17,7 @@ namespace WebApiTest.Model
 
         public DataAccess()
         {
-            _client = new MongoClient("mongodb://solariot:HnZVqnuEjQUXuYSSvps5P1QOaCafSk6pfJEKzY2cRLKo1zdmFIIdQCZYuaLWUdk6BXahMjsPXIUWcB15Co5g1g==@solariot.documents.azure.com:10250/?ssl=true");
+            _client = new MongoClient("mongodb://solariotbb:HbLb6pM81S0iRF7ATQuMGtIB0mGAnzp3FMzOy9hJSuPLqacrRwh1Ir6pCk10erylG40DEGJtaLt8YM3Wc8AhDg==@solariotbb.documents.azure.com:10250/?ssl=true");
             _server = _client.GetServer();
             _db = _server.GetDatabase("1");
         }

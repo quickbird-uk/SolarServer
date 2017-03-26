@@ -3,7 +3,7 @@
   <PropertyGroup>
     <ActiveDebugProfile>WebApiTest</ActiveDebugProfile>
     <AutoRefresh>false</AutoRefresh>
-    <NameOfLastUsedPublishProfile>solarIoT - Web Deploy</NameOfLastUsedPublishProfile>
+    <NameOfLastUsedPublishProfile>IoTUpload - Web Deploy</NameOfLastUsedPublishProfile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
