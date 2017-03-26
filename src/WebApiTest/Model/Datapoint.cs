@@ -51,7 +51,9 @@ namespace WebApiTest.Model
                         [13] = "Soil Temperature 3", 
                         [14] = "Soil Moisture 1", 
                         [15] = "Soil Moisture 2",
-                        [16] = "Soil Moisture 3"
+                        [16] = "Soil Moisture 3",
+                        [17] = "Surface Moisture",
+                        [18] = "Surface Temperature",
                     };
                 }
                 return _sensorIdLUT; 
