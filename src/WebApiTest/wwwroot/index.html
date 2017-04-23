@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <title>outdoor sensors</title>
@@ -39,7 +39,7 @@
 
             var mappedNodes;
 
-            var nodes = d3.json("http://solariot.azurewebsites.net/api/Nodes", function(error, nodeData) {
+            var nodes = d3.json("http://iotupload.quickbird.co.uk/api/Nodes", function(error, nodeData) {
 
                 nodeData.forEach(function(elem,index){
                     elem.plotData = [];    
@@ -94,7 +94,7 @@
             }); 
 
         
-            var data = d3.json("http://solariot.azurewebsites.net/api/readings", function(error, actualData) {       
+            var data = d3.json("http://iotupload.quickbird.co.uk/api/readings", function(error, actualData) {       
 
                 console.log(mappedNodes.get(2))
 

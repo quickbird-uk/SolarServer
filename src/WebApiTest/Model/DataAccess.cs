@@ -21,12 +21,14 @@ namespace WebApiTest.Model
             _client = new MongoClient("mongodb://solariotbb:HbLb6pM81S0iRF7ATQuMGtIB0mGAnzp3FMzOy9hJSuPLqacrRwh1Ir6pCk10erylG40DEGJtaLt8YM3Wc8AhDg==@solariotbb.documents.azure.com:10250/?ssl=true");
             _db = _client.GetDatabase("1");
             Console.Out.WriteLine("Connection has been established.\n");
+            
+            Console.Out.WriteLine("deleted shit.\n");
         }
 
         public async Task<IEnumerable<Node>> GetNodes()
         {
-           // var filter = new BsonDocument("x", new BsonDocument("$gte", 100));
-            return await _db.GetCollection<Node>("Nodes").AsQueryable().ToListAsync();
+            // var filter = new BsonDocument("x", new BsonDocument("$gte", 100));
+            return await _db.GetCollection<Node>("Nodes").AsQueryable().ToListAsync();           
         }
 
 
@@ -90,6 +92,7 @@ namespace WebApiTest.Model
 
             return documents;
         }
+     
 
         public async Task<List<BsonDocument>> GetDatapoint(int nodeID = -9000) // Magic Vlaue
         {

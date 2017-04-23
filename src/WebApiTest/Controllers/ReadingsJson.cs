@@ -37,9 +37,9 @@ namespace WebApiTest.Controllers
                 foreach (var el in doc.Elements)
                 {
                     if (el.Value.IsInt32)
-                        x.Add(el.Name, el.Value.AsInt32);
+                            x.Add(el.Name, el.Value.AsInt32);
                     else if(el.Value.IsDouble)
-                        x.Add(el.Name, el.Value.ToDouble());
+                            x.Add(el.Name, el.Value.ToDouble());
                     else if(el.Value.IsValidDateTime)
                         x.Add(el.Name, el.Value.ToUniversalTime());
 
@@ -65,9 +65,9 @@ namespace WebApiTest.Controllers
                 foreach (var el in doc.Elements)
                 {
                     if (el.Value.IsInt32)
-                        x.Add(el.Name, el.Value.AsInt32);
+                            x.Add(el.Name, el.Value.AsInt32);
                     else if (el.Value.IsDouble)
-                        x.Add(el.Name, el.Value.ToDouble());
+                            x.Add(el.Name, el.Value.ToDouble());
                     else if (el.Value.IsValidDateTime)
                         x.Add(el.Name, el.Value.ToUniversalTime());
 
