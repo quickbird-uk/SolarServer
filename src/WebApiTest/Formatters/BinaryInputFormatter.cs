@@ -91,7 +91,10 @@ namespace WebApiTest
                     return InputFormatterResult.Failure();
                 }
 
+
+
                 var sensor = Model.Datapoint.SensorIdLUT.FirstOrDefault(lutID => lutID.Key == sensorID);
+
                 sensorsInMessage.Add(sensor.Value); 
             }
             if ((i < bufferFilled) == false)
@@ -132,7 +135,15 @@ namespace WebApiTest
                 {
                     string key = sensorsInMessage[s];
                     float value = BitConverter.ToSingle(buffer, i);
-                    datapoint.sensorReadings.Add(key, value);
+                    if (key == "Air Temperature - External" && value > 360)
+                    {
+                        datapoint.sensorReadings.Add(key, 410 - value);
+                    }
+                    else
+                    {
+                        datapoint.sensorReadings.Add(key, value);
+                    }
+
                     i += 4;
                 }
 

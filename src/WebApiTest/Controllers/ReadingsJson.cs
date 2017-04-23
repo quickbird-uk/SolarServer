@@ -9,10 +9,11 @@ using Microsoft.AspNetCore.Mvc;
 
 using WebApiTest.Model;
 using System.Dynamic;
+using System.Diagnostics; 
 
 namespace WebApiTest.Controllers 
 {
-    [Route("api/Readings")]
+    [Route("api/readings")]
     public class ReadingsJsonController : Controller
     {
         DataAccess objds;
@@ -23,10 +24,13 @@ namespace WebApiTest.Controllers
         }
 
         [HttpGet]
-        public List<ExpandoObject> Get()
+        public async Task<List<ExpandoObject>> Get()
         {
-            List<BsonDocument> list = objds.GetDatapointsAll();
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+            List<BsonDocument> list = await objds.GetDatapointsAll();
             List<ExpandoObject> returnlist = new List<ExpandoObject>(list.Count);
+            watch.Stop();
             foreach (var doc in list) {
                 dynamic expando = new ExpandoObject();
                 var x = expando as IDictionary<string, object>; 
@@ -41,6 +45,34 @@ namespace WebApiTest.Controllers
 
                 }
                 returnlist.Add(expando); 
+            }
+
+            return returnlist;
+        }
+
+        [HttpGet("{id}")]
+        public async Task<List<ExpandoObject>> Get(int id)
+        {
+            Stopwatch watch = new Stopwatch();
+            watch.Start(); 
+            List<BsonDocument> list = await objds.GetDatapointsOfNode(id);
+            List<ExpandoObject> returnlist = new List<ExpandoObject>(list.Count);
+            watch.Stop();
+            foreach (var doc in list)
+            {
+                dynamic expando = new ExpandoObject();
+                var x = expando as IDictionary<string, object>;
+                foreach (var el in doc.Elements)
+                {
+                    if (el.Value.IsInt32)
+                        x.Add(el.Name, el.Value.AsInt32);
+                    else if (el.Value.IsDouble)
+                        x.Add(el.Name, el.Value.ToDouble());
+                    else if (el.Value.IsValidDateTime)
+                        x.Add(el.Name, el.Value.ToUniversalTime());
+
+                }
+                returnlist.Add(expando);
             }
 
             return returnlist;

@@ -101,7 +101,7 @@ namespace WebApiTest
             }
         }
 
-        public static async void MessageAll(string message)
+        public static void MessageAll(string message)
         {
             ICollection<SocketHandler> connections = _ActiveConnections.Values;
 

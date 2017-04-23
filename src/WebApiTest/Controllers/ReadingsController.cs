@@ -22,18 +22,18 @@ namespace WebApiTest.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            List<BsonDocument> list = objds.GetDatapoint();
+            List<BsonDocument> list = await objds.GetDatapoint();
             ViewData["Message"] = "Your application description page.";
             ViewData["list"] = list; 
 
             return View("Views/ReadingsView.cshtml");
         }
 
-        public IActionResult Get(int quantity)
+        public async Task<IActionResult> Get(int quantity)
         {
-            List<BsonDocument> list = objds.GetDatapoint(quantity);
+            List<BsonDocument> list = await objds.GetDatapoint(quantity);
             ViewData["Message"] = "Your application description page.";
             ViewData["list"] = list;
 
