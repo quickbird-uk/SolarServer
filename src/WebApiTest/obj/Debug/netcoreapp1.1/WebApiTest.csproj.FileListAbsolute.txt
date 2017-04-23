@@ -1,0 +1,9 @@
+C:\Dev\SolarServer\src\WebApiTest\bin\Debug\netcoreapp1.1\WebApiTest.deps.json
+C:\Dev\SolarServer\src\WebApiTest\bin\Debug\netcoreapp1.1\WebApiTest.runtimeconfig.json
+C:\Dev\SolarServer\src\WebApiTest\bin\Debug\netcoreapp1.1\WebApiTest.runtimeconfig.dev.json
+C:\Dev\SolarServer\src\WebApiTest\bin\Debug\netcoreapp1.1\WebApiTest.dll
+C:\Dev\SolarServer\src\WebApiTest\bin\Debug\netcoreapp1.1\WebApiTest.pdb
+C:\Dev\SolarServer\src\WebApiTest\obj\Debug\netcoreapp1.1\WebApiTest.csprojResolveAssemblyReference.cache
+C:\Dev\SolarServer\src\WebApiTest\obj\Debug\netcoreapp1.1\WebApiTest.AssemblyInfo.cs
+C:\Dev\SolarServer\src\WebApiTest\obj\Debug\netcoreapp1.1\WebApiTest.dll
+C:\Dev\SolarServer\src\WebApiTest\obj\Debug\netcoreapp1.1\WebApiTest.pdb

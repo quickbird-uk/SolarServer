@@ -1,16 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{36395C2A-2AFE-44E0-B3A0-8174832BAD61}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F7532218-C2C9-4E13-9CB2-98BE0E1B4240}"
-	ProjectSection(SolutionItems) = preProject
-		global.json = global.json
-	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "WebApiTest", "src\WebApiTest\WebApiTest.xproj", "{FA7275D0-C7CD-40B6-8C6D-E93D4CFA1E5F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiTest", "src\WebApiTest\WebApiTest.csproj", "{123EB3B0-6A2F-4E51-90B1-5B89F2F92C6E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,15 +15,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{FA7275D0-C7CD-40B6-8C6D-E93D4CFA1E5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FA7275D0-C7CD-40B6-8C6D-E93D4CFA1E5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FA7275D0-C7CD-40B6-8C6D-E93D4CFA1E5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FA7275D0-C7CD-40B6-8C6D-E93D4CFA1E5F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{123EB3B0-6A2F-4E51-90B1-5B89F2F92C6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{123EB3B0-6A2F-4E51-90B1-5B89F2F92C6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{123EB3B0-6A2F-4E51-90B1-5B89F2F92C6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{123EB3B0-6A2F-4E51-90B1-5B89F2F92C6E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{FA7275D0-C7CD-40B6-8C6D-E93D4CFA1E5F} = {36395C2A-2AFE-44E0-B3A0-8174832BAD61}
+		{123EB3B0-6A2F-4E51-90B1-5B89F2F92C6E} = {36395C2A-2AFE-44E0-B3A0-8174832BAD61}
 	EndGlobalSection
 EndGlobal
