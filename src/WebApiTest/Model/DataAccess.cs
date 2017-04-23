@@ -4,43 +4,54 @@ using System.Linq;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using MongoDB.Driver.Builders;
+using MongoDB.Driver.Core;
 using MongoDB.Driver.Linq;
 
 namespace WebApiTest.Model
 {
     public class DataAccess
     {
-        MongoClient _client;
-        MongoServer _server;
-        MongoDatabase _db;
+        MongoClient _client = new MongoClient();
+        IMongoDatabase _db;
+
+
 
         public DataAccess()
         {
             _client = new MongoClient("mongodb://solariotbb:HbLb6pM81S0iRF7ATQuMGtIB0mGAnzp3FMzOy9hJSuPLqacrRwh1Ir6pCk10erylG40DEGJtaLt8YM3Wc8AhDg==@solariotbb.documents.azure.com:10250/?ssl=true");
-            _server = _client.GetServer();
-            _db = _server.GetDatabase("1");
+            _db = _client.GetDatabase("1");
+            Console.Out.WriteLine("Connection has been established.\n");
         }
 
-        public IEnumerable<Node> GetNodes()
+        public async Task<IEnumerable<Node>> GetNodes()
         {
-            return _db.GetCollection<Node>("Nodes").FindAll();
+           // var filter = new BsonDocument("x", new BsonDocument("$gte", 100));
+            return await _db.GetCollection<Node>("Nodes").AsQueryable().ToListAsync();
         }
 
 
-        public Node GetNode(int id)
+        public async Task<Node> GetNode(int id)
         {
-            var res = Query<Node>.EQ(p => p.Id, id);
-            return _db.GetCollection<Node>("Nodes").FindOne(res);
+            var item  = await _db.GetCollection<Node>("Nodes").FindAsync(node => node.Id == id);
+            return item.SingleOrDefault(); 
         }
 
-        public Node CreateNode(Node p)
-        {
-            _db.GetCollection<Node>("Nodes").Save(p);
+        public async Task<Node> UpsertNode(Node p)
+        { 
+            var x = await _db.GetCollection<Node>("Nodes").ReplaceOneAsync(item => item.Id == p.Id, p);
+
             return p;
         }
 
-        public void CreateDatepoint(List<Datapoint> dp)
+        public async Task<Node> InsertNode(Node p)
+        {
+            await _db.GetCollection<Node>("Nodes").InsertOneAsync(p);
+
+            return p;
+        }
+
+
+        public async Task CreateDatapoint(List<Datapoint> dp)
         {
             List<BsonDocument> documents = new List<BsonDocument>(dp.Count); 
 
@@ -55,43 +66,50 @@ namespace WebApiTest.Model
                 documents.Add(document);
             }
 
-            _db.GetCollection("Datapoints").InsertBatch(documents);
+            await _db.GetCollection<BsonDocument>("Datapoints").InsertManyAsync(documents);
 
         }
 
-        public List<BsonDocument> GetDatapointsAll() // Magic Vlaue
+        public async Task<List<BsonDocument>> GetDatapointsAll() // Magic Vlaue
         {
-            var documents = _db.GetCollection<BsonDocument>("Datapoints").FindAll().ToList();
+            var documents = await _db.GetCollection<BsonDocument>("Datapoints")
+                .Find(FilterDefinition<BsonDocument>.Empty)
+                .ToListAsync();
 
             documents.Reverse();           
             return documents; 
         }
 
-        public List<BsonDocument> GetDatapoint(int nodeID = -9000) // Magic Vlaue
+        public async Task<List<BsonDocument>> GetDatapointsOfNode(int id) // Magic Vlaue
         {
-            int takeNUmber = 200;
-            List<Datapoint> dp = new List<Datapoint>(takeNUmber);
-            SortByBuilder sbb = new SortByBuilder();
-            sbb.Ascending("_id");
-            long number = _db.GetCollection<BsonDocument>("Datapoints").Count();
+            var filter = Builders<BsonDocument>.Filter.Eq("NodeId", id);
 
-            var documents = _db.GetCollection<BsonDocument>("Datapoints").AsQueryable().Skip((int)(number - takeNUmber)).Take(takeNUmber).ToList();
+
+            var documents = await _db.GetCollection<BsonDocument>("Datapoints")
+                .Find(filter).ToListAsync();
+
+            return documents;
+        }
+
+        public async Task<List<BsonDocument>> GetDatapoint(int nodeID = -9000) // Magic Vlaue
+        {
+            int takeNUmber = 300;
+            List<Datapoint> dp = new List<Datapoint>(takeNUmber);
+
+            long number = await _db.GetCollection<BsonDocument>("Datapoints")
+                .CountAsync(FilterDefinition<BsonDocument>.Empty);
+
+            var documents = await _db.GetCollection<BsonDocument>("Datapoints")
+                .AsQueryable().Skip((int)(number - takeNUmber)).Take(takeNUmber).ToListAsync();
 
             documents.Reverse();
             return documents;
         }
 
-        public void UpdateNode(int id, Node p)
+        public async Task RemoveNode(int id)
         {
-            p.Id = id;
-            var res = Query<Node>.EQ(pd => pd.Id, id);
-            var operation = Update<Node>.Replace(p);
-            _db.GetCollection<Node>("Nodes").Update(res, operation);
-        }
-        public void RemoveNode(int id)
-        {
-            var res = Query<Node>.EQ(e => e.Id, id);
-            var operation = _db.GetCollection<Node>("Nodes").Remove(res);
+            var filter = Builders<Node>.Filter.Eq(s => s.Id, id);
+            var operation = await _db.GetCollection<Node>("Nodes").DeleteOneAsync(filter);
         }
 
     }
