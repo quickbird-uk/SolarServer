@@ -21,8 +21,14 @@ namespace WebApiTest.Model
             _client = new MongoClient("mongodb://solariotbb:HbLb6pM81S0iRF7ATQuMGtIB0mGAnzp3FMzOy9hJSuPLqacrRwh1Ir6pCk10erylG40DEGJtaLt8YM3Wc8AhDg==@solariotbb.documents.azure.com:10250/?ssl=true");
             _db = _client.GetDatabase("1");
             Console.Out.WriteLine("Connection has been established.\n");
+
             
-            Console.Out.WriteLine("deleted shit.\n");
+            /*Somehow, sometimes, In document DB there appears a document that cannot be deteled by normal means of MongoChef Core 
+             * So I had to write a bit of code to delete those idnividual crappy documents.
+            var filter = Builders<BsonDocument>.Filter.Eq("NodeId", 1);
+            _db.GetCollection<Datapoint>("Datapoints").DeleteOne(dp => dp.NodeId == 1 && dp.UploadTime < new DateTime(2017, 04, 02)); 
+
+            Console.Out.WriteLine("deleted shit.\n");*/
         }
 
         public async Task<IEnumerable<Node>> GetNodes()

@@ -72,7 +72,6 @@ namespace WebApiTest.Controllers
                         x.Add(el.Name, el.Value.ToUniversalTime());
 
                 }
-                returnlist.Add(expando);
             }
 
             return returnlist;
