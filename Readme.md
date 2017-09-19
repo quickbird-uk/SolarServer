@@ -12,7 +12,7 @@ It uses special format -
 
  Header denotes sensor types being submitted from this sensor, all represented as shorts. We have the following sensor types: 
 ~~~C
-{      
+enum types {      
 	Light = 4, 
         Pressure_internal_open = 5, 
         Humidity_internal_open = 6,
