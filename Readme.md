@@ -1,4 +1,4 @@
-* Solar Server *
+# Solar Server 
 
 1. Accepts  uploads from the sensors
 2. Provides REST api to query the readings
@@ -7,7 +7,7 @@
 ** Uploads **
 The URL is http://{serverURI}/api/batchupload/{nodeID}, for example http://iotupload.quickbird.co.uk/api/batchupload/3
 It uses special format - 
- {"Content-Type":"quickbird/BinaryArch2v1"}
+'{"Content-Type":"quickbird/BinaryArch2v1"}'
  The content is a memory representation of the following memory dump in BASE64 form: 
 
  Header denotes sensor types being submitted from this sensor, all represented as shorts. We have the following sensor types: 
@@ -29,13 +29,14 @@ It uses special format -
         Surface_temp = 18,
 }
 A single frame may some or all of the sensors. All datapoints must have the same structure: 
-
+~~~C
     unsigned int unixTime; 
     char chargeState;
     float batteryVoltage; 
-	Sensors listed in the header. 
+~~~
+Sensors listed in the header. 
 
-All the data is momory-copy from a C array. 
+All the data is memory-copy from a C array. 
 
 ** Downloads **
 The endpoint http://{ServerURI}/api/readings_to_graph/{nodeId} is used to serve the node dashboard
