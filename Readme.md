@@ -7,7 +7,7 @@
 ## Uploads 
 The URL is http://{serverURI}/api/batchupload/{nodeID}, for example http://iotupload.quickbird.co.uk/api/batchupload/3
 It uses special format - 
-'{"Content-Type":"quickbird/BinaryArch2v1"}'
+`{"Content-Type":"quickbird/BinaryArch2v1"}`
  The content is a memory representation of the following memory dump in BASE64 form: 
 
  Header denotes sensor types being submitted from this sensor, all represented as shorts. We have the following sensor types: 
