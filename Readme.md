@@ -11,8 +11,9 @@ It uses special format -
  The content is a memory representation of the following memory dump in BASE64 form: 
 
  Header denotes sensor types being submitted from this sensor, all represented as shorts. We have the following sensor types: 
- {      
-		Light = 4, 
+~~~C
+{      
+	Light = 4, 
         Pressure_internal_open = 5, 
         Humidity_internal_open = 6,
         Temp_internal_open = 7, 
@@ -28,6 +29,7 @@ It uses special format -
         Surface_moisture = 17, 
         Surface_temp = 18,
 }
+~~~
 A single frame may some or all of the sensors. All datapoints must have the same structure: 
 ~~~C
     unsigned int unixTime; 
