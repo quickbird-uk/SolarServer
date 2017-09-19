@@ -5,7 +5,7 @@
 
 
 ## Uploads 
-The URL is http://{serverURI}/api/batchupload/{nodeID}, for example http://iotupload.quickbird.co.uk/api/batchupload/3
+The URL is `http://{serverURI}/api/batchupload/{nodeID}`, for example http://iotupload.quickbird.co.uk/api/batchupload/3
 It uses special format - 
 `{"Content-Type":"quickbird/BinaryArch2v1"}`
  The content is a memory representation of the following memory dump in BASE64 form: 
@@ -41,6 +41,6 @@ Sensors listed in the header.
 All the data is memory-copy from a C array. 
 
 ## Downloads 
-The endpoint http://{ServerURI}/api/readings_to_graph/{nodeId} is used to serve the node dashboard
+The endpoint `http://{ServerURI}/api/readings_to_graph/{nodeId}` is used to serve the node dashboard
 The server also has an in-built graph, which queries the controller at http://iotupload.quickbird.co.uk/api/Nodes
 It is a bit silly and redundant. 
